@@ -1,8 +1,6 @@
 from django.db import models
 from django.urls import reverse
 
-
-
 class Author(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
@@ -27,7 +25,7 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     books = models.ManyToManyField(Books, blank=True)
-    
+
 
     def __str__(self):
         return self.title
