@@ -110,3 +110,25 @@ class CoachedPostList(APIView):
         # return the data
         return Response(data)
 
+
+
+class PostsTwice(APIView):
+    def get(self, request):
+        posts = Post.objects.select_related("author").all()
+        serializer = PostSerializer(posts, many=True)
+        for post in posts:
+            print(post.author)
+        data = serializer.data
+        return Response(data)
+
+
+class PostThird(APIView):
+    def get(self, request):
+        posts = Post.objects.prefetch_related("books").all()
+        for post in posts:
+            for book in post.books.all():
+                print(book.name)
+
+        serializer = PostSerializer(posts, many=True)
+        data = serializer.data
+        return Response(data)
